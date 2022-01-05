@@ -1,0 +1,22 @@
+server.port: 8082
+eureka:
+  client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+  instance:
+      prefer-ip-address: true
+      hostname: localhost
+spring:
+  application:
+    name: gatewayservice
+  cloud:
+    gateway:
+      routes:
+      - id: menuservice
+        uri: lb://menuservice
+        predicates:
+        - Path=/menu/**
+      - id: foodservice
+        uri: lb://foodservice
+        predicates:
+        - Path=/food/**
